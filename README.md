@@ -20,7 +20,10 @@ pip install ultralytics datumaro PyYAML tqdm
 
 5. Convert MTSD to ultralytics yolo format
 ```
-python convert.py --mtsd-root mtsd_v2_fully_annotated --out-dir yolo
+python convert.py --mtsd-root mtsd_v2_fully_annotated --output yolo
 ```
 
 6. Train YOLO
+```
+yolo detect train model=yolo11s.pt data=yolo/data.yaml imgsz=720 epochs=200
+```

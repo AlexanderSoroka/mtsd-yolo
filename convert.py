@@ -11,7 +11,7 @@ from datumaro.components.media import Image as DmImage
 
 
 def read_split_list(path: str) -> list[str]:
-    with path.open("r", encoding="utf-8") as f:
+    with open(path, "r", encoding="utf-8") as f:
         return [ln.strip() for ln in f if ln.strip() and not ln.startswith("#")]
 
 
@@ -51,7 +51,7 @@ def main():
         split_keys[split_name] = file_ids
         for file_id in file_ids:
             annotation_path = os.path.join(annotation_dir, f"{file_id}.json")
-            if not os.path.exists(annotation_path.exists):
+            if not os.path.exists(annotation_path):
                 continue
 
             with open(annotation_path, "r", encoding="utf-8") as annotation_input:
