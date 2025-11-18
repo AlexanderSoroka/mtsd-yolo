@@ -4,6 +4,7 @@
 ```
 cd mapillary
 find . -name '*.zip' -exec unzip {} \;
+mv images/ mtsd_v2_fully_annotated/
 ```
 
 3. Setup training virtual environment and activate it
