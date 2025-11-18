@@ -16,10 +16,10 @@ def read_split_list(path: str) -> list[str]:
 
 
 def write_dataset_yaml(out_dir: str, subsets: list[str], class_names: list[str]) -> None:
-    data = {s: str((out_dir / "images" / s).resolve()) for s in ["train", "val", "test"] if s in subsets}
+    data = {s: os.path.join(out_dir, "images", s) for s in ["train", "val", "test"] if s in subsets}
     data["names"] = class_names
     data["nc"] = len(class_names)
-    with (out_dir / "dataset.yaml").open("w", encoding="utf-8") as f:
+    with open(os.path.join(out_dir, "dataset.yaml"), "w", encoding="utf-8") as f:
         yaml.safe_dump(data, f, sort_keys=False)
 
 
@@ -88,10 +88,10 @@ def main():
 
             ds.put(DatasetItem(id=file_id, media=media, annotations=annotations, subset=subset))
 
-    # Export to Ultralytics layout
+    print("Export to Ultralytics layout")
     ds.export(save_dir=str(args.output), format="yolo_ultralytics", save_media=True)
 
-    # dataset.yaml for Ultralytics
+    print('Write dataset.yaml for Ultralytics')
     write_dataset_yaml(args.output, args.splits, [c.name for c in label_categories])
 
     print(f"[DONE] Exported YOLO (Ultralytics) dataset to {args.output}")
